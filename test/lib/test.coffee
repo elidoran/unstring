@@ -63,13 +63,13 @@ describe 'test unstring', ->
   it 'should auto-learn an unknown string', ->
     unstring = buildUnstring()
     assert.equal unstring.has('unknown'), false
-    assert.equal unstring.string('unknown'), 0
+    assert.deepEqual unstring.string('unknown'), id:0, known:false
     assert.equal unstring.has('unknown'), true
 
 
   it 'should return id for known string', ->
     unstring = buildUnstring strings:[ 'one', 'two', 'three' ]
-    assert.equal unstring.string('two'), 1
+    assert.deepEqual unstring.string('two'), id:1, known:true
 
 
   it 'should return null for an unknown id', ->
@@ -97,9 +97,9 @@ describe 'test unstring', ->
       assert.equal unstring.string('a'), false
 
       # will accept
-      assert.equal unstring.string('ab'), 0
-      assert.equal unstring.string('abc'), 1
-      assert.equal unstring.string('abcdefghi'), 2
+      assert.deepEqual unstring.string('ab'), id:0, known:false
+      assert.deepEqual unstring.string('abc'), id:1, known:false
+      assert.deepEqual unstring.string('abcdefghi'), id:2, known:false
 
 
     it 'when max allows', ->
@@ -110,18 +110,18 @@ describe 'test unstring', ->
       assert.equal unstring.string('123456'), false
 
       # will accept
-      assert.equal unstring.string('1234'), 0
-      assert.equal unstring.string('123'), 1
-      assert.equal unstring.string('12'), 2
+      assert.deepEqual unstring.string('1234'), id:0, known:false
+      assert.deepEqual unstring.string('123'), id:1, known:false
+      assert.deepEqual unstring.string('12'), id:2, known:false
 
 
     it 'when limit allows', ->
       unstring = buildUnstring limit: 3
 
       # will accept
-      assert.equal unstring.string('one'), 0
-      assert.equal unstring.string('two'), 1
-      assert.equal unstring.string('three'), 2
+      assert.deepEqual unstring.string('one'), id:0, known:false
+      assert.deepEqual unstring.string('two'), id:1, known:false
+      assert.deepEqual unstring.string('three'), id:2, known:false
 
       # won't accept
       assert.equal unstring.string('a'), false
@@ -133,15 +133,15 @@ describe 'test unstring', ->
       unstring = buildUnstring bytes: 12
 
       # will accept
-      assert.equal unstring.string('one'), 0   # 3 bytes = 3 total
-      assert.equal unstring.string('two'), 1   # 3 bytes = 6 total
-      assert.equal unstring.string('three'), 2 # 5 bytes = 11 total
+      assert.deepEqual unstring.string('one'), id:0, known:false   # 3 bytes = 3 total
+      assert.deepEqual unstring.string('two'), id:1, known:false   # 3 bytes = 6 total
+      assert.deepEqual unstring.string('three'), id:2, known:false # 5 bytes = 11 total
 
       # won't accept
       assert.equal unstring.string('four'), false # 4 bytes would be 15 total. too much.
 
       # will accept
-      assert.equal unstring.string('a'), 3        # 1 byte would be 12 total, allowed
+      assert.deepEqual unstring.string('a'), id:3, known:false  # 1 byte would be 12 total, allowed
 
       # wont accept
       assert.equal unstring.string('1'), false

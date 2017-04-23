@@ -52,12 +52,16 @@ var unstring = buildUnstring({
 
 // get `id` for this string in this cache.
 // we know from above it's the first string,
-// so, its `id` is `0`.
+// returns an object with `id` and `known`.
+// so, its `id` is `0` and `known` is `true`
+// because it was known before the call.
 var id = unstring.string('key1')
 
 // an unknown string will be learned and its ID returned.
 // this one will be learned.
-// so, its `id` is `2` (the third string).
+// so, its `id` is `2` (the third string),
+// and `known` is `false` because it wasn't
+// known *before* the call.
 id = unstring.string('unknown')
 
 // if it isn't allowed due to a limit, such as min length:

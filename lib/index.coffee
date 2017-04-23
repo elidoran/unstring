@@ -59,7 +59,7 @@ class Unstring
 
     id = @map[string]
 
-    if id? then return id
+    if id? then return { id, known: true }
 
     # instead, figure out if we should learn it
 
@@ -77,7 +77,10 @@ class Unstring
     # it's acceptable, so, learn it.
     # provide byte length as well so it doesn't have to
     # calculate it again.
-    @add1 string, length
+    id = @add1 string, length
+    # known=false because it wasn't known before,
+    # we learned it during this call.
+    { id, known: false }
 
 
   # return the string for this id, or null.
