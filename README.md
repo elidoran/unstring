@@ -33,7 +33,7 @@ npm install unstring --save
 
 
 ```javascript
-    // get the builder
+// get the builder
 var buildUnstring = require('unstring')
 
 // build one and configure it
@@ -69,7 +69,7 @@ id = unstring.string('blah blah blah......imagine 101+ chars')
 
 // if we'd already added 200 strings
 // then this would be denied with a `false`.
-id = unstring.string('the 201+ string add attempt')
+id = unstring.string('the 201+ string() attempt')
 
 // if the total bytes used by all the strings learned
 // exceeded (10 * 1024) bytes (configured above)
@@ -83,7 +83,7 @@ var string = unstring.restring(id)
 
 
 // can teach it strings at any time,
-// ignoring all set restrictions,
+// ignoring all restrictions,
 // via `add1()` and `add()`.
 unstring.add1('single string *only*')
 unstring.add('one string')
