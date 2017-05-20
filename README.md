@@ -99,6 +99,14 @@ unstring.has('key1') // returns `true`
 unstring.has('some value') // returns `true`
 unstring.has('unknown') // returns `true` (above...)
 unstring.has('not this one') // returns false
+
+
+// ignore restrictions and learn a string anyway:
+unstring.learn(123, 'string', stringByteLength)
+// the length is optional.
+// when you don't specify it then unstring
+// will do `Buffer.byteLength(string)`.
+// Note, this can override a current known string at that ID.
 ```
 
 
