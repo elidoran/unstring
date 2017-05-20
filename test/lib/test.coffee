@@ -6,6 +6,11 @@ describe 'test unstring', ->
 
   it 'should build', -> assert buildUnstring()
 
+  it 'should deny learning by default', ->
+
+    unstring = buildUnstring()
+    result = unstring.string 'test'
+    assert.equal result, false
 
   it 'should build with strings options', ->
     array = [ 'one', 'two', 'three', 'four', 'five' ]
@@ -61,7 +66,7 @@ describe 'test unstring', ->
 
 
   it 'should auto-learn an unknown string', ->
-    unstring = buildUnstring()
+    unstring = buildUnstring limit: 1
     assert.equal unstring.has('unknown'), false
     assert.deepEqual unstring.string('unknown'), id:0, known:false
     assert.equal unstring.has('unknown'), true
@@ -90,7 +95,7 @@ describe 'test unstring', ->
   describe 'will learn a string', ->
 
     it 'when min allows', ->
-      unstring = buildUnstring min: 2
+      unstring = buildUnstring min: 2, limit: Infinity
 
       # won't accept
       assert.equal unstring.string(''), false
@@ -103,7 +108,7 @@ describe 'test unstring', ->
 
 
     it 'when max allows', ->
-      unstring = buildUnstring max: 5
+      unstring = buildUnstring max: 5, limit: Infinity
 
       # won't accept
       assert.equal unstring.string('1234567890'), false
@@ -130,7 +135,7 @@ describe 'test unstring', ->
 
 
     it 'when bytes allows', ->
-      unstring = buildUnstring bytes: 12
+      unstring = buildUnstring bytes: 12, limit: Infinity
 
       # will accept
       assert.deepEqual unstring.string('one'), id:0, known:false   # 3 bytes = 3 total
