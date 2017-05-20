@@ -92,7 +92,7 @@ describe 'test unstring', ->
     assert.equal unstring.restring(2), 'three'
 
 
-  describe 'will learn a string', ->
+  describe 'will auto-learn a string', ->
 
     it 'when min allows', ->
       unstring = buildUnstring min: 2, limit: Infinity
