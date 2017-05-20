@@ -11,12 +11,6 @@ class Unstring
 
   constructor: (options) ->
 
-    # use default restrictions unless options has them.
-    @min   = options?.min ? 1
-    @max   = options?.max ? Infinity
-    @limit = options?.limit ? 0 # default to deny-all. require enabling.
-    @bytes = options?.bytes ? Infinity
-
     # remember how many bytes we have.
     @bytesCount = 0
 
@@ -24,6 +18,14 @@ class Unstring
     @array = flatten options?.strings ? []
     # and in an object for string(string).
     @map = Object.create null
+
+    # use default restrictions unless options has them.
+    @min   = options?.min ? 1
+    @max   = options?.max ? Infinity
+    @bytes = options?.bytes ? Infinity
+
+    # default to deny-all. require enabling. allow options.strings
+    @limit = options?.limit ? @array.length
 
     # if we received strings via an array,
     # then add them into the map, too.
