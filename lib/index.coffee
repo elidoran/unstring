@@ -14,7 +14,7 @@ class Unstring
     # use default restrictions unless options has them.
     @min   = options?.min ? 1
     @max   = options?.max ? Infinity
-    @limit = options?.limit ? Infinity
+    @limit = options?.limit ? 0 # default to deny-all. require enabling.
     @bytes = options?.bytes ? Infinity
 
     # remember how many bytes we have.
@@ -82,6 +82,13 @@ class Unstring
     # we learned it during this call.
     { id, known: false }
 
+  # learn a new string
+  learn: (id, string, byteLength) ->
+    index         = id
+    @array[index] = string
+    @map[string]  = index
+    @bytesCount  += byteLength ? Buffer.byteLength string
+    return
 
   # return the string for this id, or null.
   restring: (id) -> @array[id]
