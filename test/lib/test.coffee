@@ -151,3 +151,23 @@ describe 'test unstring', ->
       # wont accept
       assert.equal unstring.string('1'), false
       assert.equal unstring.string('full already'), false
+
+
+  it 'should learn() string with id/length', ->
+
+    unstring = buildUnstring()
+    unstring.learn 123, 'testing', 7
+    assert.equal unstring.array[123], 'testing'
+    assert.equal unstring.map.testing, 123
+    assert.equal unstring.bytesCount, 7
+    assert.equal unstring.restring(123), 'testing'
+
+
+  it 'should learn() string without length', ->
+
+    unstring = buildUnstring()
+    unstring.learn 123, 'testing'
+    assert.equal unstring.array[123], 'testing'
+    assert.equal unstring.map.testing, 123
+    assert.equal unstring.bytesCount, 7
+    assert.equal unstring.restring(123), 'testing'
